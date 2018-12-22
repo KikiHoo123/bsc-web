@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bsc.modules.trade.dao.TradeMapper">
+    <resultMap id="getTrade" type="com.bsc.modules.trade.entity.Trade">
+        <id property="id" column="id"/>
+        <result property="label" column="label"/>
+        <result property="type" column="type"/>
+        <result property="oprice" column="oprice"/>
+        <result property="price" column="price"/>
+        <result property="information" column="information"/>
+        <result property="campus" column="campus"/>
+        <result property="post.id" column="postID"/>
+    </resultMap>
+    <insert id="insert">
+        insert into trade(postID, label, type, oprice, price, information, campus)
+        values ( #{post.id}, #{label}, #{type},#{oprice},#{price}, #{information}, #{campus})
+    </insert>
+
+    <update id="update">
+        update trade
+        <set>
+            <if test="post != null and post.id != null and post.id != ''">
+                 postID = #{post.id},
+            </if>
+            <if test="label != null and label != ''">
+                label = #{label},
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type},
+            </if>
+            <if test="oprice != null and oprice != ''">
+                oprice = #{oprice},
+            </if>
+            <if test="price != null and price != ''">
+                price = #{price},
+            </if>
+            <if test="information != null and information != ''">
+                information = #{information},
+            </if>
+            <if test="campus != null and campus != ''">
+                campus = #{campus},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from trade where id = #{id};
+    </delete>
+
+    <select id="get" resultMap="getTrade">
+        select * from trade where id = #{id}
+    </select>
+
+    <select id="getT" resultMap="getTrade">
+        select * from trade
+        <where>
+            <if test="post != null and post.id != null and post.id != ''">
+             AND    postID = #{post.id}
+            </if>
+            <if test="label != null and label != ''">
+            AND    label = #{label}
+            </if>
+            <if test="type != null and type != ''">
+              AND  type = #{type}
+            </if>
+            <if test="oprice != null and oprice != ''">
+             AND   oprice = #{oprice}
+            </if>
+            <if test="price != null and price != ''">
+             AND   price = #{price}
+            </if>
+            <if test="information != null and information != ''">
+             AND   information = #{information}
+            </if>
+            <if test="campus != null and campus != ''">
+             AND  campus = #{campus}
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="findList" resultMap="getTrade">
+        select * from trade
+        <where>
+            <if test="post != null and post.id != null and post.id != ''">
+              AND  postID = #{post.id}
+            </if>
+            <if test="label != null and label != ''">
+              AND  label = #{label}
+            </if>
+            <if test="type != null and type != ''">
+              AND type = #{type}
+            </if>
+            <if test="oprice != null and oprice != ''">
+              AND  oprice = #{oprice}
+            </if>
+            <if test="price != null and price != ''">
+              AND  price = #{price}
+            </if>
+            <if test="information != null and information != ''">
+              AND information = #{information}
+            </if>
+            <if test="campus != null and campus != ''">
+              AND  campus = #{campus}
+            </if>
+        </where>
+    </select>
+
+    <select id="findAllList" resultMap="getTrade">
+        select * from trade order by ID desc
+    </select>
+</mapper>
